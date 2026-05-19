@@ -59,7 +59,7 @@ const $=id=>document.getElementById(id);
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)}
 function save(){localStorage.setItem('vvf_hist',JSON.stringify(history))}
 function showTab(t){tab=t;['home','esame','studio'].forEach(x=>$('t-'+x).classList.toggle('active',x===t));render()}
-function startExam(){qset=[...Q].sort(()=>Math.random()-.5).slice(0,10);idx=0;answers=[];exam={start:Date.now(),limit:10*60};render()}
+function startExam(){qset=[...Q].sort(()=>Math.random()-.5).slice(0,10);idx=0;answers=[];exam={start:Date.now(),limit:10*60};tab='esame';render()}
 function select(a){if(answers[idx]!=null)return; answers[idx]=a; const ok=a===qset[idx].correct; toast(ok?'Risposta corretta':'Risposta errata'); render()}
 function next(){if(idx<qset.length-1) idx++; render()}
 function prev(){if(idx>0) idx--; render()}
@@ -72,7 +72,7 @@ const opts=['a','b','c'].map(k=>`<button class="ans ${answers[idx]===k?(k===q.co
 return `<div class="card"><div class="row"><div>Domanda ${idx+1} / ${qset.length} • Risposte ${done}</div><div class="timer">${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}</div></div><div class="prog"><div class="bar" style="width:${(done/qset.length)*100}%"></div></div><div class="q"><div class="n">Q${q.id}</div><div class="t">${q.q}</div><div class="answers">${opts}</div>${answers[idx]!=null?`<div class="fb ${answers[idx]===q.correct?'ok':'bad'}">${answers[idx]===q.correct?'Corretto':'Sbagliato'} • Risposta giusta: ${q.correct.toUpperCase()}</div>`:''}</div><div style="display:flex;gap:8px"><button class="btn secondary" onclick="prev()" ${idx===0?'disabled':''}>Indietro</button><button class="btn secondary" onclick="next()" ${idx===qset.length-1?'disabled':''}>Avanti</button></div><button class="btn primary" style="margin-top:8px" onclick="finish()">Termina simulazione</button></div>`
 }
 function studio(){return `<div class="card"><input id="s" class="search" placeholder="Cerca una domanda..." oninput="render()" value="${localStorage.getItem('vvf_s')||''}"><div class="pillrow"><div class="pill on">Tutte</div><div class="pill">Sbagliate</div><div class="pill">Corrette</div></div><div class="small">Elenco semplificato delle domande.</div></div><div class="card"><div class="empty">Per alleggerire il file, qui puoi aggiungere l'elenco completo delle 345 domande.</div></div>`}
-function render(){const a=$('app'); localStorage.setItem('vvf_s', $('s')?$('s').value:''); if(tab==='home') a.innerHTML=home(); if(tab==='esame'){if(!exam){a.innerHTML=home(); return} a.innerHTML=examView()} if(tab==='studio') a.innerHTML=studio()}
+function render(){const a=$('app'); localStorage.setItem('vvf_s', $('s')?$('s').value:''); ['home','esame','studio'].forEach(x=>$('t-'+x).classList.toggle('active',x===tab)); if(tab==='home') a.innerHTML=home(); if(tab==='esame'){if(!exam){a.innerHTML=home(); return} a.innerHTML=examView()} if(tab==='studio') a.innerHTML=studio()}
 render();
 </script>
 </body>
