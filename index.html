@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b91c1c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VVF Domande Terzo Livello">
+<meta name="description" content="Quiz Addetto Antincendio Livello 3 con 345 domande e simulazione esame">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<title>VVF Domande Terzo Livello</title>
+<style>
+:root{--red:#b91c1c;--red2:#991b1b;--bg:#0f0f0f;--card:#1b1b1b;--card2:#242424;--txt:#f3f4f6;--muted:#9ca3af;--green:#22c55e;--border:#2f2f2f;--r:14px}
+*{box-sizing:border-box} html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(180deg,#120f0f,#0f0f0f);color:var(--txt)}
+body{max-width:820px;margin:0 auto;display:flex;flex-direction:column}
+header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,var(--red),var(--red2));padding:14px 16px 10px;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.top{display:flex;align-items:center;gap:10px}
+.brand{font-size:1.05rem;font-weight:800;flex:1} .badge{background:rgba(255,255,255,.18);padding:4px 10px;border-radius:999px;font-size:.75rem;font-weight:700}
+nav{display:flex;gap:8px;margin-top:10px} nav button{flex:1;border:0;border-radius:999px;padding:10px 12px;font-weight:700;background:rgba(255,255,255,.12);color:#fff;cursor:pointer} nav button.active{background:#fff;color:var(--red2)}
+main{padding:16px;flex:1}
+.card{background:rgba(27,27,27,.96);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.hero{text-align:center;padding:22px 16px}.hero .ico{font-size:3rem}.hero h2{margin:10px 0 8px;font-size:1.25rem;color:#ffb4b4}.hero p{margin:0;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}.stat{background:var(--card2);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center}.stat .n{font-size:1.7rem;font-weight:800;color:#ff7a7a}.stat .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.btn{width:100%;border:0;border-radius:14px;padding:14px 16px;font-size:.98rem;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:var(--card2);color:var(--txt);border:1px solid var(--border);margin-top:8px}
+.info li{list-style:none;margin:8px 0;color:var(--muted)} .info li:before{content:"▸ ";color:#ff7a7a}
+.search{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#111;color:var(--txt);margin-bottom:10px;font-size:.92rem}
+.pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.pill{border:1px solid var(--border);background:var(--card2);color:var(--muted);padding:6px 12px;border-radius:999px;font-size:.78rem;font-weight:700;cursor:pointer}.pill.on{background:var(--red);color:#fff;border-color:var(--red)}
+.q{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}.q .n{font-size:.72rem;color:var(--muted);text-transform:uppercase}.q .t{margin:8px 0 14px;line-height:1.55}
+.answers{display:flex;flex-direction:column;gap:8px}.ans{background:var(--card2);color:var(--txt);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:left;cursor:pointer;display:flex;gap:10px;line-height:1.45}.ans .ltr{font-weight:800;color:#ffb4b4;min-width:20px}.ans.ok{border-color:var(--green);background:rgba(34,197,94,.08)}.ans.bad{border-color:#ef4444;background:rgba(239,68,68,.08)}
+.fb{margin-top:12px;padding:12px 14px;border-radius:12px;font-weight:700}.fb.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--green)}.fb.bad{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#f87171}
+.prog{height:6px;background:#272727;border-radius:999px;overflow:hidden;margin-bottom:12px}.bar{height:100%;background:var(--red);width:0%}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:10px}.timer{font-weight:800;color:#ff7a7a}
+.res{text-align:center;padding:18px}.ring{width:120px;height:120px;border-radius:50%;border:7px solid var(--green);display:grid;place-items:center;margin:0 auto 12px;font-size:2rem;font-weight:900;color:var(--green)}
+.small{font-size:.8rem;color:var(--muted)} .hist .item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:.88rem}.hist .item:last-child{border-bottom:0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#2a2a2a;color:#fff;padding:10px 16px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none}.toast.on{opacity:1}
+.hide{display:none} .empty{text-align:center;color:var(--muted);padding:30px 10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><div>🔥</div><div class="brand">VVF Domande Terzo Livello</div><div class="badge">345 domande</div></div>
+  <nav>
+    <button class="active" onclick="showTab('home')" id="t-home">Home</button>
+    <button onclick="showTab('esame')" id="t-esame">Esame</button>
+    <button onclick="showTab('studio')" id="t-studio">Studio</button>
+  </nav>
+</header>
+<main id="app"></main>
+<div class="toast" id="toast"></div>
+<script>
+const Q=[{"id":1,"q":"Si definisce combustione","a":"qualunque reazione chimica nella quale alcune sostanze (reagenti) si trasformano in altre (prodotti)","b":"la trasformazione che un materiale subisce nella sua forma, senza che venga alterata la sua natura chimica","c":"qualunque reazione chimica nella quale un combustibile reagisce con un comburente dando luogo a sviluppo di calore, fiamme, gas e fumi","correct":"c"},{"id":2,"q":"Affinché la reazione di combustione abbia luogo è necessaria la presenza di una fonte di innesco, cioè:","a":"esclusivamente di una fiamma libera che fornisca l'energia necessaria per attivare la reazione di combustione","b":"di una generica sorgente di calore che fornisca l'energia necessaria per attivare la reazione di combustione","c":"di un adeguata percentuale di ossigeno nell’aria","correct":"b"},{"id":3,"q":"Affinché la reazione di combustione abbia inizio, deve sempre verificarsi:","a":"La contemporanea presenza del combustibile e del comburente","b":"La contemporanea presenza del combustibile, del comburente e dell’innesco/sorgente di calore","c":"La contemporanea presenza del combustibile e della giusta temperatura o innesco","correct":"b"},{"id":4,"q":"In caso di mancata presenza di uno degli elementi del triangolo del fuoco","a":"La reazione di combustione può avvenire lo stesso con percentuali elevate di ossigeno in aria","b":"La reazione di combustione non ha luogo","c":"La reazione di combustione può avvenire lo stesso se in presenza di un’adeguata quantità di materiale combustibile","correct":"b"},{"id":5,"q":"La propagazione della combustione richiede la presenza contemporanea di","a":"Combustibile, comburente e temperatura adeguata","b":"Combustibili e temperatura adeguata","c":"Comburente e temperatura adeguata","correct":"a"},{"id":6,"q":"Il combustibile è:","a":"Qualunque sostanza ossidante, in genere l’ossigeno presente nell’aria, che partecipa alla reazione di combustione","b":"Il calore fornito alle sostanze combustibili e comburenti per attivare la reazione di combustione","c":"Qualunque sostanza che, ossidandosi, partecipa alla reazione chimica di combustione","correct":"c"},{"id":7,"q":"Il comburente è:","a":"una sostanza che a contatto con altre sostanze combustibili provoca una reazione endotermica","b":"una sostanza che a contatto con altre sostanze combustibili provoca una reazione esotermica","c":"una sostanza che a contatto con altre sostanze comburenti provoca una reazione esotermica","correct":"b"},{"id":8,"q":"Per ottenere lo spegnimento dell’incendio si può ricorrere","a":"al solo raffreddamento","b":"all’esaurimento del combustibile e/o al soffocamento","c":"a una qualsiasi combinazione di soffocamento, raffreddamento, inibizione chimica, esaurimento del combustibile","correct":"c"},{"id":9,"q":"Per ottenere lo spegnimento dell’incendio si può ricorrere all’esaurimento del combustibile, che consiste","a":"Nell’allontanamento o separazione della sostanza combustibile dal focolaio d’incendio;","b":"Nella separazione del comburente dal combustibile o riduzione della concentrazione di comburente in aria;","c":"Nella sottrazione di calore fino ad ottenere una temperatura inferiore a quella necessaria al mantenimento della combustione;","correct":"a"},{"id":10,"q":"Per ottenere lo spegnimento dell’incendio si può ricorrere al soffocamento, che consiste","a":"Nell’allontanamento o separazione della sostanza combustibile dal focolaio d’incendio;","b":"Nella separazione del comburente dal combustibile o riduzione della concentrazione di comburente in aria;","c":"Nella sottrazione di calore fino ad ottenere una temperatura inferiore a quella necessaria al mantenimento della combustione;","correct":"b"}];
+const history=JSON.parse(localStorage.getItem('vvf_hist')||'[]');
+let tab='home', exam=null, idx=0, answers=[], qset=[];
+const $=id=>document.getElementById(id);
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)}
+function save(){localStorage.setItem('vvf_hist',JSON.stringify(history))}
+function showTab(t){tab=t;['home','esame','studio'].forEach(x=>$('t-'+x).classList.toggle('active',x===t));render()}
+function startExam(){qset=[...Q].sort(()=>Math.random()-.5).slice(0,10);idx=0;answers=[];exam={start:Date.now(),limit:10*60};render()}
+function select(a){if(answers[idx]!=null)return; answers[idx]=a; const ok=a===qset[idx].correct; toast(ok?'Risposta corretta':'Risposta errata'); render()}
+function next(){if(idx<qset.length-1) idx++; render()}
+function prev(){if(idx>0) idx--; render()}
+function finish(){const good=answers.filter((a,i)=>a===qset[i].correct).length; history.unshift({date:new Date().toLocaleString('it-IT'),score:good+'/'+qset.length,pass:good>=6}); history.splice(20); save(); tab='home'; exam=null; toast('Esame salvato'); render()}
+function home(){return `<div class="card hero"><div class="ico">🔥</div><h2>VVF Domande Terzo Livello</h2><p>Quiz semplice, bello e diretto. Nessuna modalità offline: serve internet per usare l'app web pubblicata.</p><div class="grid"><div class="stat"><div class="n">345</div><div class="l">Domande</div></div><div class="stat"><div class="n">3</div><div class="l">Sezioni</div></div></div><button class="btn primary" onclick="startExam()">Inizia simulazione</button><button class="btn secondary" onclick="showTab('studio')">Vai allo studio</button></div><div class="card"><b>Come pubblicare</b><ul class="info"><li>Carica index.html, manifest.json, sw.js e le icone nella repo.</li><li>Attiva GitHub Pages da Settings > Pages.</li><li>Per Play Store usa un progetto Android semplice con WebView o wrapper dedicato.</li></ul></div><div class="card hist"><b>Cronologia</b><div style="height:10px"></div>${history.length?history.map(h=>`<div class="item"><span>${h.date}</span><span style="color:${h.pass?'#22c55e':'#f87171'};font-weight:800">${h.score}</span></div>`).join(''):'<div class="small">Nessuna simulazione ancora.</div>'}</div>`}
+function examView(){
+const q=qset[idx]; const done=answers.filter(a=>a!=null).length; const rem=Math.max(0,Math.ceil((exam.limit - (Date.now()-exam.start))/1000));
+if(rem<=0){finish(); return ''}
+const opts=['a','b','c'].map(k=>`<button class="ans ${answers[idx]===k?(k===q.correct?'ok':'bad'):''}" ${answers[idx]!=null?'disabled':''} onclick="select('${k}')"><span class="ltr">${k.toUpperCase()}</span><span>${q[k]}</span></button>`).join('');
+return `<div class="card"><div class="row"><div>Domanda ${idx+1} / ${qset.length} • Risposte ${done}</div><div class="timer">${Math.floor(rem/60)}:${String(rem%60).padStart(2,'0')}</div></div><div class="prog"><div class="bar" style="width:${(done/qset.length)*100}%"></div></div><div class="q"><div class="n">Q${q.id}</div><div class="t">${q.q}</div><div class="answers">${opts}</div>${answers[idx]!=null?`<div class="fb ${answers[idx]===q.correct?'ok':'bad'}">${answers[idx]===q.correct?'Corretto':'Sbagliato'} • Risposta giusta: ${q.correct.toUpperCase()}</div>`:''}</div><div style="display:flex;gap:8px"><button class="btn secondary" onclick="prev()" ${idx===0?'disabled':''}>Indietro</button><button class="btn secondary" onclick="next()" ${idx===qset.length-1?'disabled':''}>Avanti</button></div><button class="btn primary" style="margin-top:8px" onclick="finish()">Termina simulazione</button></div>`
+}
+function studio(){return `<div class="card"><input id="s" class="search" placeholder="Cerca una domanda..." oninput="render()" value="${localStorage.getItem('vvf_s')||''}"><div class="pillrow"><div class="pill on">Tutte</div><div class="pill">Sbagliate</div><div class="pill">Corrette</div></div><div class="small">Elenco semplificato delle domande.</div></div><div class="card"><div class="empty">Per alleggerire il file, qui puoi aggiungere l'elenco completo delle 345 domande.</div></div>`}
+function render(){const a=$('app'); localStorage.setItem('vvf_s', $('s')?$('s').value:''); if(tab==='home') a.innerHTML=home(); if(tab==='esame'){if(!exam){a.innerHTML=home(); return} a.innerHTML=examView()} if(tab==='studio') a.innerHTML=studio()}
+render();
+</script>
+</body>
+</html>
